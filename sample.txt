@@ -1,0 +1,3 @@
+Fever:false
+Malaria:false
+Cancer:true
