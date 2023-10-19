@@ -9,7 +9,7 @@ class Main {
         factory.loadIllnessesFromFile();
         while (loop)
            {
-                System.out.println("1. Add Patient \n2.Add illness \n3.Print patients by illness \n4.Show All Fatal Illness Survivors\n5.Show AllFatal Illness Survivors By Gender\n6. Exit");
+                System.out.println("\n\n1.Add Patient \n2.Add illness \n3.Print patients by illness \n4.Show All Fatal Illness Survivors\n5.Show AllFatal Illness Survivors By Gender\n6. Exit\n");
                 int choice = sc.nextInt();
                 sc.nextLine();
                 switch (choice){
