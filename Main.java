@@ -25,7 +25,11 @@ class Main {
 				byte ill=sc.nextByte();
                                 sc.nextLine();
 				Patient pat=new Patient(name,gender,survive==1?true:false);
+				try{
 				pat.addIllness(factory.getIllness(ill));
+				}catch (UnknownIllnessException e) {
+            				System.err.println(e.getMessage());
+        			}
 				obj.addPatient(pat);
                                 break;
                          }
@@ -41,7 +45,11 @@ class Main {
                                 factory.printIllness();
                                 byte ill=sc.nextByte();
                                 sc.nextLine();
-                                p.addIllness(factory.getIllness(ill));
+                                try{
+				p.addIllness(factory.getIllness(ill));
+				}catch (UnknownIllnessException e) {
+            				System.err.println(e.getMessage());
+        			}
                                 break;
                         }
 
@@ -50,9 +58,14 @@ class Main {
                                 factory.printIllness();
                                 byte ill=sc.nextByte();
                                 sc.nextLine();
+                                try{
                                 List<Patient> patients=obj.getPatientsBy((factory.getIllness(ill)));
                                 System.out.println("\nPatients by illness\n");
-                                obj.showp(patients);
+                                obj.showp(patients);                                				
+				}catch (UnknownIllnessException e) {
+            				System.err.println(e.getMessage());
+        			}
+                                
                                 break;
                         }
                         case 4:{

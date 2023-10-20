@@ -4,8 +4,10 @@ import java.io.*;
 
 class IllnessFactory{
 	static List<Illness> illobj=new ArrayList<>();
-        public static Illness getIllness(byte illness){
-		return illobj.get(illness-1);
+        public static Illness getIllness(byte illness) throws UnknownIllnessException{
+        	if(illness <4)
+			return illobj.get(illness-1);
+		throw new UnknownIllnessException();
 		
         }
 	void printIllness(){
@@ -44,16 +46,21 @@ class IllnessFactory{
 			return this.name;
 		}
 	}
+	
 }
-
+class UnknownIllnessException extends Exception {
+    	 UnknownIllnessException( ) {
+        	System.out.println("Unknown illness: ");
+    }
+}
 enum Gender{
 	Male,
 	Female
 }	
 class Patient{
-	String name;
-	Gender gender;
-	Set<IllnessFactory.Illness> illness;
+	private String name;
+	private Gender gender;
+	private Set<IllnessFactory.Illness> illness;
 	boolean survived;
 	Patient(String name,byte g,boolean survived){
 		this.name=name;
@@ -66,6 +73,9 @@ class Patient{
 	}
 	String getName(){
                 return this.name;
+        }
+        Gender getGender(){
+                return this.gender;
         }
 
 	void addIllness(IllnessFactory.Illness ill){
@@ -95,6 +105,20 @@ class Patient{
                         	return true;
         	return false;
 	}
+	public boolean equals(Object o) {
+      		if (o==this) {	
+        		return true;  
+       		 }  
+
+		if (o==null||this.getClass()== o.getClass()){ 
+			return false;
+		}
+        	return this.name.equals(o);
+  	 }  
+	@Override
+	public int hashCode() {
+        	 return Objects.hash(name);
+    }
 
 }
 public class Hospital{
@@ -108,6 +132,9 @@ public class Hospital{
 	}
 
 	public void addPatient(Patient object){
+		for(Patient p:patients)
+			if(p.getName().equals(object.getName()))
+				return ;
 		patients.add(object);
 	}
 
@@ -134,7 +161,7 @@ public class Hospital{
     	public List<Patient> getAllFatalIllnessSurvivorsByGender(Gender gender){
         	List<Patient> survivorsbygender = new ArrayList<>();
         	for (Patient patient : patients){
-            		if(patient.gender == gender && patient.hasSurvived() && patient.hasFatalIllness()){
+            		if(patient.getGender()==gender && patient.hasSurvived() && patient.hasFatalIllness()){
                 		survivorsbygender.add(patient);
             		}
         	}
